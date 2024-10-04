@@ -109,9 +109,25 @@ plastic_data_all |>
 ### Ex 3.
 
 ```{r Ex3, message = FALSE}
-# Write your code here to answer exercise 3
+
+plastic_data_all |> 
+  mutate(
+   pct_mismanaged_plastic_ocean = 
+   (mismanaged_plastic_ocean/mismanaged_plastic) * 100
+  ) |> 
+  drop_na() |> 
+  group_by(region) |> 
+  summarise(med_pct_mismanaged_plastic_ocean 
+            = median(pct_mismanaged_plastic_ocean)) |> 
+  arrange(desc(med_pct_mismanaged_plastic_ocean))
 
 
+
+# Africa's value for median pct_mismanaged_plastic_ocean is initially NA as it has no values for the ocean and plastic waste when the code is "SOM" which is in Somalia. Essentially the code is trying to find the median of a percentage that is undefined so it spits out NA.
+
+# The command drop_na() has to be added to remove any NA's.
+
+# Africa has the lowest median out of all the regions listed.
 
 ```
 
