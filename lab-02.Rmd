@@ -83,7 +83,7 @@ plastic_data_all |>
   group_by(region) |> 
   count(region)
 
-
+#Africa has the greatest number of coastal territories/regions
 ```
 
 
