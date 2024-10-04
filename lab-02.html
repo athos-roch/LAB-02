@@ -390,8 +390,8 @@ plastic_data_all &lt;- data2 %&gt;%
 
 
 # Member 6 (pair 3) write code to join your data to &#39;plastic_data_all&#39;:
-plastic_data_all &lt;- data3 %&gt;%
-  select(-name) %&gt;%
+plastic_data_all &lt;- data3 |&gt; 
+  select(-name) |&gt; 
   right_join(plastic_data_all, by = &quot;code&quot;)
 
 
