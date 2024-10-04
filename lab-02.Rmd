@@ -91,9 +91,17 @@ plastic_data_all |>
 ### Ex 2.
 
 ```{r Ex2, message = FALSE}
-# Write your code here to answer exercise 2
+plastic_data_all |> 
+  mutate(total_mismanage_plastic = mismanaged_plastic * population)
 
+plastic_data_all |> 
+  mutate(
+    total_mismanaged_plastic = mismanaged_plastic * population) |> 
+  group_by(region) |> 
+  summarise(mean_mismanaged_waste = mean(total_mismanaged_plastic)) |> 
+  arrange(desc(mean_mismanaged_waste))
 
+# Asia has the highest mean total mismanaged plastic waste while Oceania has the least.
 
 ```
 
