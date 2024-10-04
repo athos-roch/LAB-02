@@ -11,7 +11,7 @@
 
 <meta name="author" content="Team Name: Athos Rocha, Louis Weil, Ethan Wood, Lucas Smith, Jake Cullen and Aniruddh Iyer" />
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-05" />
 
 <title>Lab 02 - Global plastic waste</title>
 
@@ -353,7 +353,7 @@ display: none;
 <h1 class="title toc-ignore">Lab 02 - Global plastic waste</h1>
 <h4 class="author">Team Name: Athos Rocha, Louis Weil, Ethan Wood, Lucas
 Smith, Jake Cullen and Aniruddh Iyer</h4>
-<h4 class="date">2024-10-04</h4>
+<h4 class="date">2024-10-05</h4>
 
 </div>
 
@@ -422,8 +422,7 @@ plastic_data_all %&gt;% head(n = 10)</code></pre>
 <h2>Exercises</h2>
 <div id="ex-1." class="section level3">
 <h3>Ex 1.</h3>
-<pre class="r"><code># Write your code here to answer exercise 1
-plastic_data_all |&gt; 
+<pre class="r"><code>plastic_data_all |&gt; 
   group_by(region) |&gt; 
   count(region)</code></pre>
 <pre><code>## # A tibble: 6 × 2
@@ -504,7 +503,30 @@ plastic_data_all |&gt;
 </div>
 <div id="ex-4." class="section level3">
 <h3>Ex 4.</h3>
-<pre class="r"><code># Write your code here to answer exercise 4</code></pre>
+<pre class="r"><code>plastic_data_all |&gt; 
+  rename(pop = population, mis_plastic = mismanaged_plastic,
+         mis_ocean_plastic = mismanaged_plastic_ocean) |&gt; 
+  mutate(
+    region = str_replace_all(region, &quot;Latin America and The Caribbean&quot;, &quot;LAC&quot;),
+    prop = (mis_ocean_plastic/mis_plastic)*100
+  ) |&gt; 
+  drop_na() |&gt; 
+  group_by(region) |&gt; 
+  summarise(
+    pop = sum(pop),
+    mean_prop = mean(prop)
+  ) |&gt; 
+  arrange(desc(pop))</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   region             pop mean_prop
+##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Asia          4465069.     3.15 
+## 2 Africa        1001170.     1.12 
+## 3 Europe         682928.     1.05 
+## 4 LAC            613988.     4.14 
+## 5 North America  370538.     0.959
+## 6 Oceania         41586.     2.55</code></pre>
+<pre class="r"><code># From this data we see that regions that are more coastal (e.g. LAC, Oceania) have a higher proportion of ocean waste which is what we would expect. Asia still has a high proportion which could just be due to the large population it has.</code></pre>
 </div>
 </div>
 
